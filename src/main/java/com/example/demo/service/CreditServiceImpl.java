@@ -14,26 +14,26 @@ public class CreditServiceImpl implements CreditService {
     private CreditRepository creditRepository;
     @Override
     public Optional<Credit> get(UUID id) {
-        return this.creditRepository.findById(id);
+        return creditRepository.findById(id);
     }
 
     @Override
     public Iterable<Credit> getAll() {
-        return this.creditRepository.findAll();
+        return creditRepository.findAll();
     }
 
     @Override
     public Credit save(Credit credit) {
-        return this.creditRepository.save(credit);
+        return creditRepository.save(credit);
     }
 
     @Override
     public void update(Credit credit) {
-        this.creditRepository.update(credit.getId(),credit.getCreditLimit(),credit.getCreditPercent());
+        creditRepository.update(credit.getId(),credit.getCreditLimit(),credit.getCreditPercent());
     }
 
     @Override
     public void delete(Credit credit) {
-        this.creditRepository.delete(credit);
+        creditRepository.delete(credit);
     }
 }

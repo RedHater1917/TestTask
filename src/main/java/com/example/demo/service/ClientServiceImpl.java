@@ -15,26 +15,26 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Optional<Client> get(UUID id) {
-        return this.clientRepository.findById(id);
+        return clientRepository.findById(id);
     }
 
     @Override
     public Iterable<Client> getAll() {
-        return this.clientRepository.findAll();
+        return clientRepository.findAll();
     }
 
     @Override
     public Client save(Client client) {
-        return this.clientRepository.save(client);
+        return clientRepository.save(client);
     }
 
     @Override
     public void update(Client client) {
-        this.clientRepository.update(client.getId(),client.getFio(),client.getEmail(),client.getPassportNumber());
+        clientRepository.update(client.getId(),client.getFio(),client.getEmail(),client.getPassportNumber());
     }
 
     @Override
     public void delete(Client client) {
-        this.clientRepository.delete(client);
+        clientRepository.delete(client);
     }
 }
