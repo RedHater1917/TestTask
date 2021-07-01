@@ -1,7 +1,17 @@
-<mat-tab-group mat-align-tabs="start">
-  <mat-tab label="Bank"></mat-tab>
-  <mat-tab label="Client">Content 2</mat-tab>
-  <mat-tab label="Credit">Content 3</mat-tab>
-  <mat-tab label="Credit Offer">Content 3</mat-tab>
-  <mat-tab label="Credit Arrangement">Content 3</mat-tab>
-</mat-tab-group>
+<mat-toolbar>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="admin()"> 
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span>Admin</span>
+    </button>
+    <button mat-menu-item (click)="arrangement()"> 
+      <mat-icon>payments</mat-icon>
+      <span>Arrangement</span>
+    </button>
+  </mat-menu>
+  <span>Bank app</span>
+</mat-toolbar>
+<router-outlet></router-outlet>

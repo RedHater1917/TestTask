@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TableEntityInterface } from 'src/app/entities/tableEntityInterface';
+import { TableServiceInterface } from 'src/app/service/tableServiceInterface';
 
 @Component({
   selector: 'app-entity-table',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entity-table.component.css']
 })
 export class EntityTableComponent implements OnInit {
+  @Input("service") service: TableServiceInterface;
+  @Input("entity") entity: TableEntityInterface;
 
   constructor() { }
 

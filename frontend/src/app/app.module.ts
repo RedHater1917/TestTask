@@ -13,11 +13,15 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import { CreditArrangementComponent } from './components/credit-arrangement.component/credit-arrangement.component';
+import { AdminComponent } from './components/admin/admin.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
 @NgModule({
   declarations: [
     AppComponent,
     EntityTableComponent,
     CreditArrangementComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,9 @@ import { CreditArrangementComponent } from './components/credit-arrangement.comp
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatToolbarModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
