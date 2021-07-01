@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface CreditRepository extends CrudRepository<Credit, UUID> {
     @Transactional
     @Modifying
-    @Query("UPDATE Credit c set c.creditLimit = :creditLimit, c.creditPercent = :creditPercent,"
+    @Query("UPDATE Credit c set c.creditLimit = :creditLimit, c.creditPercent = :creditPercent "
             +"where c.id = :id")
     void update(@Param("id") UUID id, @Param("creditLimit") Integer creditLimit,
                 @Param("creditPercent") Short creditPercent);

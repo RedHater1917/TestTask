@@ -17,7 +17,7 @@ import java.util.UUID;
 public interface BankRepository extends CrudRepository<Bank, UUID> {
     @Transactional
     @Modifying
-    @Query("UPDATE Bank b set b.clientList = :clientList, b.creditList = :creditList" +
+    @Query("UPDATE Bank b set b.clientList = :clientList, b.creditList = :creditList " +
             "where b.id = :id")
     void update(@Param("id") UUID id, @Param("clientList") Set<Client> clientList,
                 @Param("creditList") Set<Credit> creditList);

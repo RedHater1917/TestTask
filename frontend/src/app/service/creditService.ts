@@ -1,30 +1,30 @@
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable } from "rxjs";
-import { TableServiceInterface } from "./tableServiceInterface";
 import { HttpClient } from "@angular/common/http";
 import { Credit } from "../entities/credit";
 @Injectable({
     providedIn: "root",
   })
-export class CreditService implements TableServiceInterface{
+export class CreditService{
 
     constructor(private http: HttpClient, public dialog: MatDialog) {}
 
     get(id: String): Observable<Credit> {
-        throw new Error("Method not implemented.");
-    }
-    getAll(): Observable<Credit[]> {
-        throw new Error("Method not implemented.");
-    }
-    save(entity: Credit): Observable<Credit> {
-        throw new Error("Method not implemented.");
-    }
-    update(entity: Credit): Observable<Credit> {
-        throw new Error("Method not implemented.");
-    }
-    delete(entity: Credit): Observable<Object> {
-        throw new Error("Method not implemented.");
-    }
+        return this.http.get<Credit>(`api/credit/${id}`);
+     }
+     getAll(): Observable<Credit[]> {
+         return this.http.get<Credit[]>(`api/credit/`);
+     }
+     save(entity: Credit): Observable<Credit> {
+         return this.http.post<Credit>(`api/credit/save`,entity);
+     }
+     update(entity: Credit): Observable<String> {
+         return this.http.post<String>(`api/credit/update`,entity);
+     }
+     delete(entity: Credit): Observable<Object> {
+         return this.http.post<Object>(`api/credit/delete`,entity);
+     }
+
 
 }

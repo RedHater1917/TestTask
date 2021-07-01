@@ -17,7 +17,7 @@ public interface CreditOfferRepository extends CrudRepository<CreditOffer, UUID>
     @Transactional
     @Modifying
     @Query("UPDATE CreditOffer c set c.client = :client, c.credit = :credit, c.creditSum = :creditSum"
-            +"where c.id = :id")
+            +" where c.id = :id")
     void update(@Param("id") UUID id, @Param("client") Client client,
                 @Param("credit") Credit credit, @Param("creditSum") Long creditSum);
 }

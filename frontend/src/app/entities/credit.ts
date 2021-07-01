@@ -1,11 +1,8 @@
-import { TableEntityInterface } from "./tableEntityInterface";
 
-export class Credit implements TableEntityInterface{
+
+export class Credit{
     id:String;
     creditLimit:number;
     creditPercent:number;
 
-    getColumns(): String[] {
-        return ["id","creditLimit","creditPercent"];
-    }
 }

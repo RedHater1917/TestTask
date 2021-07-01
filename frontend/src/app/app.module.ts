@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { EntityTableComponent } from './components/entity-table.component/entity-table.component';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -16,16 +15,41 @@ import { CreditArrangementComponent } from './components/credit-arrangement.comp
 import { AdminComponent } from './components/admin/admin.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
+import { ClientEditComponent } from './components/edit/client-edit/client-edit.component';
+import { CreditEditComponent } from './components/edit/credit-edit/credit-edit.component';
+import { BankEditComponent } from './components/edit/bank-edit/bank-edit.component';
+import { CreditOfferEditComponent } from './components/edit/credit-offer-edit/credit-offer-edit.component';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { BankBrowseComponent } from './components/browse/bank-browse/bank-browse.component';
+import { ClientBrowseComponent } from './components/browse/client-browse/client-browse.component';
+import { CreditBrowseComponent } from './components/browse/credit-browse/credit-browse.component';
+import { CreditOfferBrowseComponent } from './components/browse/credit-offer-browse/credit-offer-browse.component';
+import {MatIconModule} from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
-    EntityTableComponent,
     CreditArrangementComponent,
     AdminComponent,
+    ClientEditComponent,
+    CreditEditComponent,
+    BankEditComponent,
+    CreditOfferEditComponent,
+    DeleteDialogComponent,
+    ClientBrowseComponent,
+    CreditBrowseComponent,
+    CreditOfferBrowseComponent,
+    BankBrowseComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     NoopAnimationsModule,
     MatButtonModule,
     MatCardModule,
@@ -35,7 +59,14 @@ import {MatMenuModule} from '@angular/material/menu';
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatIconModule
+  ],
+  entryComponents: [
+    ClientEditComponent,
+    CreditEditComponent,
+    CreditOfferEditComponent,
+    BankEditComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

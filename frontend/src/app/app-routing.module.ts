@@ -5,11 +5,11 @@ import { CreditArrangementComponent } from './components/credit-arrangement.comp
 
 const routes: Routes = [
   {
-    path: "/",
+    path: "",
     component: AdminComponent,
   },
   {
-    path: "/arrangement",
+    path: "arrangement",
     component: CreditArrangementComponent,
   },
 ];

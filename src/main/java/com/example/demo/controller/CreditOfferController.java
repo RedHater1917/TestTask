@@ -22,7 +22,7 @@ public class CreditOfferController {
     public Iterable<CreditOffer> getAll() {
         return service.getAll();
     }
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestBody CreditOffer creditOffer) {
         service.delete(creditOffer);
         return "Deleted successfully";
