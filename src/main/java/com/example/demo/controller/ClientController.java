@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Client;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,19 +24,17 @@ public class ClientController {
     public Iterable<Client> getAll() {
         return service.getAll();
     }
-    @GetMapping("/delete")
-    public String delete(@RequestBody Client client) {
+    @GetMapping("/newBankClients/{bankId}")
+    public Iterable<Client> getNewBankClients(@PathVariable UUID bankId) {
+        return service.getNewBankClients(bankId);
+    }
+    @PostMapping("/delete")
+    public void delete(@RequestBody Client client) {
         service.delete(client);
-        return "Deleted successfully";
     }
     @PostMapping("/save")
     public Client save(@RequestBody Client client) {
         return service.save(client);
-    }
-    @PostMapping("/update")
-    public String update(@RequestBody Client client) {
-        service.update(client);
-        return "Updated successfully";
     }
 
 }

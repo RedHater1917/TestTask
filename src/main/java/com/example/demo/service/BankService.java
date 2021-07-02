@@ -10,6 +10,5 @@ public interface BankService {
     Optional<Bank> get(UUID id);
     Iterable<Bank> getAll();
     Bank save(Bank bank);
-    void update(Bank bank);
     void delete(Bank bank);
 }

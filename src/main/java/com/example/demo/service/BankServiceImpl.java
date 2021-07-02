@@ -29,11 +29,6 @@ public class BankServiceImpl implements BankService{
     }
 
     @Override
-    public void update(Bank bank) {
-        bankRepository.update(bank.getId(),bank.getClientList(),bank.getCreditList());
-    }
-
-    @Override
     public void delete(Bank bank) {
         bankRepository.delete(bank);
     }

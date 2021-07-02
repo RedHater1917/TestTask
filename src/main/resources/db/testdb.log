@@ -1,21 +1,26 @@
-/*C3*/SET SCHEMA PUBLIC
+/*C4*/SET SCHEMA PUBLIC
 drop table if exists bank CASCADE 
 drop table if exists bank_client_list CASCADE 
 drop table if exists bank_credit_list CASCADE 
 drop table if exists client CASCADE 
 drop table if exists credit CASCADE 
 drop table if exists credit_offer CASCADE 
+drop table if exists payment_schedule CASCADE 
 create table bank (id binary(255) not null, primary key (id))
 create table bank_client_list (bank_id binary(255) not null, client_list_id binary(255) not null, primary key (bank_id, client_list_id))
 create table bank_credit_list (bank_id binary(255) not null, credit_list_id binary(255) not null, primary key (bank_id, credit_list_id))
 create table client (id binary(255) not null, email varchar(255), fio varchar(255), passport_number integer, primary key (id))
 create table credit (id binary(255) not null, credit_limit integer, credit_percent smallint, primary key (id))
 create table credit_offer (id binary(255) not null, credit_sum bigint, client_id binary(255) not null, credit_id binary(255) not null, primary key (id))
+create table payment_schedule (id binary(255) not null, credit_body_sum bigint, credit_percent_sum bigint, payment_date date, payment_sum bigint, offer_id binary(255) not null, primary key (id))
 alter table bank_client_list add constraint FKj23thvlf5tk9oy0sf0808lyxy foreign key (client_list_id) references client
 alter table bank_client_list add constraint FKp82wiv8s7eydnrgjvtb2ebhm2 foreign key (bank_id) references bank
 alter table bank_credit_list add constraint FK7l817fym4xdngqvu8gpafw7aj foreign key (credit_list_id) references credit
 alter table bank_credit_list add constraint FK7e7qqta7g8wdc4516nq22wkf1 foreign key (bank_id) references bank
 alter table credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references client
 alter table credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references credit
-INSERT INTO CLIENT VALUES('a0ea677cd0044bf99b7107eab98001830000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000','alex22.11.0152@gmail.com','123',222)
+alter table payment_schedule add constraint FK8vri2xv30eogfl76jh4s3v6kt foreign key (offer_id) references credit_offer
+INSERT INTO CLIENT VALUES('2fa296cd1317409883ba24cd708b8ae30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000','alex22.11.0152@gmail.com','123',123)
+COMMIT
+DELETE FROM CLIENT WHERE ID='2fa296cd1317409883ba24cd708b8ae30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
 COMMIT

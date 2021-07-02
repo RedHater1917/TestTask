@@ -10,6 +10,5 @@ public interface CreditService {
     Optional<Credit> get(UUID id);
     Iterable<Credit> getAll();
     Credit save(Credit credit);
-    void update(Credit credit);
     void delete(Credit credit);
 }

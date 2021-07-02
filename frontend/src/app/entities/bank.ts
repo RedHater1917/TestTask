@@ -3,6 +3,6 @@ import { Credit } from "./credit";
 
 export class Bank{
     id:String;
-    clientList:Client[];
-    creditList:Credit[];
+    clientList:Client[] = [];
+    creditList:Credit[] = [];
 }

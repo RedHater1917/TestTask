@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +22,6 @@ public class CreditOffer {
     @JoinColumn(name = "credit_id")
     private Credit credit;
     private Long creditSum;
-    //TODO Спросить про график платежей и добавить его, а также спросить
-    // про "Код доступа к данным должен быть изолирован в классах DAO;"
+    @OneToMany(mappedBy="offer")
+    private Set<PaymentSchedule> paymentSchedule;
 }

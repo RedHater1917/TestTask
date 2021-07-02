@@ -4,6 +4,7 @@ import com.example.demo.entity.Client;
 import com.example.demo.entity.Credit;
 import com.example.demo.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,18 +24,12 @@ public class CreditController {
     public Iterable<Credit> getAll() {
         return service.getAll();
     }
-    @GetMapping("/delete")
-    public String delete(@RequestBody Credit credit) {
+    @PostMapping("/delete")
+    public void delete(@RequestBody Credit credit) {
         service.delete(credit);
-        return "Deleted successfully";
     }
     @PostMapping("/save")
     public Credit save(@RequestBody Credit credit) {
         return service.save(credit);
-    }
-    @PostMapping("/update")
-    public String update(@RequestBody Credit credit) {
-        service.update(credit);
-        return "Updated successfully";
     }
 }

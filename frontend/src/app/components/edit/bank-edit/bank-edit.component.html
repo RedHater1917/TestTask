@@ -1,1 +1,50 @@
-<p>bank-edit works!</p>
+<div class="card">
+    <mat-list class="column">
+        <div mat-subheader>Bank clients</div>
+        <mat-list-item *ngFor="let client of data.clientList">
+          <div mat-line>{{client.fio}}
+            <button mat-flat-button color="primary" class="right_button" (click)="removeClient(client)">
+                -
+            </button>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div mat-subheader>All clients</div>
+        <mat-list-item *ngFor="let client of allClients">
+          <div mat-line>{{client.fio}}
+            <button mat-flat-button color="primary" class="right_button" (click)="addClient(client)">
+                +
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+      <mat-list class="column">
+        <div mat-subheader>Bank credits</div>
+        <mat-list-item *ngFor="let credits of data.creditList">
+          <div mat-line> 
+            {{credits.creditLimit}}({{credits.creditPercent}}%)
+            <button mat-flat-button color="primary" class="right_button" (click)="removeCredits(credit)">
+                -
+            </button>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div mat-subheader>All credits</div>
+        <mat-list-item *ngFor="let credits of allCredits"> 
+          <div mat-line>
+            {{credits.creditLimit}}({{credits.creditPercent}}%)
+            <button mat-flat-button color="primary" class="right_button" (click)="addCredits(credit)">
+                +
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+</div>
+<div>
+  <button mat-flat-button color="primary" (click)="save()" class="button">
+    Ok
+  </button>
+  <button mat-flat-button color="primary" (click)="close()" class="button">
+    Cancel
+  </button>
+</div>

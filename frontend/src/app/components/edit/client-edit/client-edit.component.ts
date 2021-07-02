@@ -26,24 +26,26 @@ export class ClientEditComponent{
       }
     }
   onSubmit() {
-    if (this.clientForm.valid) {
-      if(this.data == null){
-        this.data = new Client();
-        this.data.fio = this.clientForm.value.fio;
-        this.data.email = this.clientForm.value.email;
-        this.data.passportNumber = this.clientForm.value.passportNumber;
-        this.service.save(this.data).subscribe((s) => {
-          this.dialogRef.close();
-        });
-      }else{
-        this.data.fio = this.clientForm.value.fio;
-        this.data.email = this.clientForm.value.email;
-        this.data.passportNumber = this.clientForm.value.passportNumber;
-        this.service.update(this.data).subscribe((s) => {
-          this.dialogRef.close();
-        });
-      }
+    if(this.data == null){
+      this.data = new Client();
+      this.data.fio = this.clientForm.value.fio;
+      this.data.email = this.clientForm.value.email;
+      this.data.passportNumber = this.clientForm.value.passportNumber;
+      this.service.save(this.data).subscribe((s) => {
+        this.afterSaving()
+      });
+    }else{
+      this.data.fio = this.clientForm.value.fio;
+      this.data.email = this.clientForm.value.email;
+      this.data.passportNumber = this.clientForm.value.passportNumber;
+      this.service.update(this.data).subscribe((s) => {
+        this.afterSaving()
+      });
     }
+  }
+  private afterSaving(){
+    this.dialogRef.close();
+    this.service.loadData();
   }
   close(){
     this.dialogRef.close();

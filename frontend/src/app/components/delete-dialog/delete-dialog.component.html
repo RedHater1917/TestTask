@@ -1,1 +1,12 @@
-<p>delete-dialog works!</p>
+<mat-card>
+    <mat-card-title>DELETE?</mat-card-title>
+    <mat-card-content>Confirm object deletion</mat-card-content>
+    <mat-card-actions>
+        <button mat-flat-button color="primary" (click)="delete()">
+            Ok
+        </button>
+        <button mat-flat-button color="primary" (click)="close()">
+            Cancel
+        </button>
+    </mat-card-actions>
+</mat-card>

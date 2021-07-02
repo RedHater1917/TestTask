@@ -28,11 +28,6 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public void update(Credit credit) {
-        creditRepository.update(credit.getId(),credit.getCreditLimit(),credit.getCreditPercent());
-    }
-
-    @Override
     public void delete(Credit credit) {
         creditRepository.delete(credit);
     }

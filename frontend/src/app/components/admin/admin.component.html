@@ -1,8 +1,17 @@
 <mat-tab-group mat-align-tabs="start">
-    <mat-tab label="Bank"></mat-tab>
-    <mat-tab label="Client"><app-client-browse></app-client-browse>
+    <mat-tab label="Bank" #bank>
+      <app-bank-browse [active]="bank.isActive"></app-bank-browse>
     </mat-tab>
-    <mat-tab label="Credit">Content 3</mat-tab>
-    <mat-tab label="Credit Offer">Content 3</mat-tab>
-    <mat-tab label="Credit Arrangement">Content 3</mat-tab>
+    <mat-tab label="Client" #client>
+      <app-client-browse [active]="client.isActive"></app-client-browse>
+    </mat-tab>
+    <mat-tab label="Credit">
+      <app-credit-browse></app-credit-browse>
+    </mat-tab>
+    <mat-tab label="Credit Offer">
+      <app-credit-offer-browse></app-credit-offer-browse>
+    </mat-tab>
+    <mat-tab label="Credit Arrangement">
+      <app-credit-arrangement></app-credit-arrangement>
+    </mat-tab>
   </mat-tab-group>

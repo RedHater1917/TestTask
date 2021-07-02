@@ -28,13 +28,14 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.save(client);
     }
 
-    @Override
-    public void update(Client client) {
-        clientRepository.update(client.getId(),client.getFio(),client.getEmail(),client.getPassportNumber());
-    }
 
     @Override
     public void delete(Client client) {
         clientRepository.delete(client);
+    }
+
+    @Override
+    public Iterable<Client> getNewBankClients(UUID bankId) {
+        return this.clientRepository.getNewBankClients(bankId);
     }
 }

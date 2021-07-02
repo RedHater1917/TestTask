@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { CreditOffer } from "../entities/creditOffer";
 @Injectable({
@@ -9,7 +9,13 @@ import { CreditOffer } from "../entities/creditOffer";
 export class CreditOfferService{
 
     constructor(private http: HttpClient, public dialog: MatDialog) {}
-
+    public offersData: BehaviorSubject<CreditOffer[]> = new BehaviorSubject<CreditOffer[]>(null);
+    
+    loadData(){
+        this.http.get<CreditOffer[]>(`api/creditOffer/`).subscribe(creditOffer=>{
+            this.offersData.next(creditOffer);
+        });
+    }
     get(id: String): Observable<CreditOffer> {
         return this.http.get<CreditOffer>(`api/creditOffer/${id}`);
      }

@@ -28,12 +28,6 @@ public class CreditOfferServiceImpl implements CreditOfferService {
     }
 
     @Override
-    public void update(CreditOffer creditOffer) {
-        creditOfferRepository.update(creditOffer.getId(),creditOffer.getClient(),
-                            creditOffer.getCredit(), creditOffer.getCreditSum());
-    }
-
-    @Override
     public void delete(CreditOffer creditOffer) {
 
     }
