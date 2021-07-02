@@ -1,1 +1,32 @@
-<p>credit-browse works!</p>
+<div class="demo-button-container">
+    <button mat-flat-button color="primary" (click)="service.createEditDialog()">
+      +
+    </button>
+</div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="creditLimit">
+        <th mat-header-cell *matHeaderCellDef> CREDIT LIMIT </th>
+        <td mat-cell *matCellDef="let element"> {{element.creditLimit}} </td>
+    </ng-container>
+    <ng-container matColumnDef="creditPercent">
+        <th mat-header-cell *matHeaderCellDef> CREDIT PERCENT </th>
+        <td mat-cell *matCellDef="let element"> {{element.creditPercent}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+        <mat-cell *matCellDef="let row; let i=index;">
+            <button mat-icon-button class="mat-primary" (click)="service.createEditDialog(row)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+            <button mat-icon-button class="mat-primary" (click)="service.createDeleteDialog(row)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

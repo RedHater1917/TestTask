@@ -1,1 +1,18 @@
-<p>credit-edit works!</p>
+<form [formGroup]="creditForm" (ngSubmit)="onSubmit()" class="example-form" id="creditFormId">
+    <mat-card-content>
+      <mat-form-field [formGroup]="creditForm">
+        <input matInput required placeholder="Full name" formControlName="fio" />
+      </mat-form-field>
+      <mat-form-field [formGroup]="creditForm">
+        <input matInput required placeholder="Email" formControlName="email" />
+      </mat-form-field>
+    </mat-card-content>
+
+    <button [disabled]="creditForm.invalid" mat-flat-button color="primary" class="btn-block" type="submit">
+      Ok
+    </button>
+    <button mat-flat-button color="primary" class="btn-block" (click)="close()" style="margin:5px;">
+      Cancel
+    </button>
+</form>
+  

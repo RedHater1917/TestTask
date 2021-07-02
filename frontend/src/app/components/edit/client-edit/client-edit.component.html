@@ -1,12 +1,12 @@
 <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="example-form" id="clientFormId">
     <mat-card-content>
-      <mat-form-field class="example-full-width" [formGroup]="clientForm">
+      <mat-form-field [formGroup]="clientForm">
         <input matInput required placeholder="Full name" formControlName="fio" />
       </mat-form-field>
-      <mat-form-field class="example-full-width" [formGroup]="clientForm">
+      <mat-form-field [formGroup]="clientForm">
         <input matInput required placeholder="Email" formControlName="email" />
       </mat-form-field>
-      <mat-form-field class="example-full-width" [formGroup]="clientForm">
+      <mat-form-field [formGroup]="clientForm">
         <input matInput required placeholder="Passport Number" formControlName="passportNumber" />
       </mat-form-field>
     </mat-card-content>

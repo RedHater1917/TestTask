@@ -5,13 +5,10 @@
     <mat-tab label="Client" #client>
       <app-client-browse [active]="client.isActive"></app-client-browse>
     </mat-tab>
-    <mat-tab label="Credit">
-      <app-credit-browse></app-credit-browse>
+    <mat-tab label="Credit" #credit>
+      <app-credit-browse [active]="credit.isActive"></app-credit-browse>
     </mat-tab>
-    <mat-tab label="Credit Offer">
-      <app-credit-offer-browse></app-credit-offer-browse>
-    </mat-tab>
-    <mat-tab label="Credit Arrangement">
-      <app-credit-arrangement></app-credit-arrangement>
+    <mat-tab label="Credit Offer" #offer>
+      <app-credit-offer-browse [active]="offer.isActive"></app-credit-offer-browse>
     </mat-tab>
   </mat-tab-group>
