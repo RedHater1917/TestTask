@@ -1,0 +1,15 @@
+.margin_5px{
+    margin:5px;
+}
+.scroll_box{
+ overflow-y: scroll;
+ height: 100%;
+ width: 100%;
+}
+.full_width{
+    width: 100%;
+}
+.full{
+    height: 100%;
+    width: 100%;
+}

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Credit } from 'src/app/entities/credit';
-import { CreditService } from 'src/app/service/creditService';
+import { CreditService } from 'src/app/services/creditService';
 
 @Component({
   selector: 'app-credit-edit',
@@ -21,7 +21,7 @@ export class CreditEditComponent{
         creditLimit:[""]
       });
       if(this.data!=null){
-        this.creditForm.setValue({creditPercent:data.creditPercent, email: data.creditLimit})
+        this.creditForm.setValue({creditPercent:data.creditPercent, creditLimit: data.creditLimit})
       }
     }
     

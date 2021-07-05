@@ -5,7 +5,6 @@ import com.example.demo.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -14,8 +13,8 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
 
     @Override
-    public Optional<Client> get(UUID id) {
-        return clientRepository.findById(id);
+    public Client get(UUID id) {
+        return clientRepository.findById(id).get();
     }
 
     @Override

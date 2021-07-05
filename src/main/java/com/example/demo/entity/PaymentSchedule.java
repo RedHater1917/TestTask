@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,15 +11,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class PaymentSchedule {
+public class PaymentSchedule{
     @Id
     @GeneratedValue
     private UUID id;
     private LocalDate paymentDate;
-    private Long paymentSum;
-    private Long creditBodySum;
-    private Long creditPercentSum;
-    @ManyToOne
-    @JoinColumn(name="offer_id", nullable=false)
+    private Double paymentSum;
+    private Double creditBodySum;
+    private Double creditPercentSum;
+    @ManyToOne(fetch = FetchType.EAGER)
     private CreditOffer offer;
 }

@@ -3,10 +3,10 @@ import { Bank } from 'src/app/entities/bank';
 import { Client } from 'src/app/entities/client';
 import { Credit } from 'src/app/entities/credit';
 import { CreditOffer } from 'src/app/entities/creditOffer';
-import { BankService } from 'src/app/service/bankService';
-import { ClientService } from 'src/app/service/clientService';
-import { CreditOfferService } from 'src/app/service/creditOfferService';
-import { CreditService } from 'src/app/service/creditService';
+import { BankService } from 'src/app/services/bankService';
+import { ClientService } from 'src/app/services/clientService';
+import { CreditOfferService } from 'src/app/services/creditOfferService';
+import { CreditService } from 'src/app/services/creditService';
 
 @Component({
   selector: 'app-admin',

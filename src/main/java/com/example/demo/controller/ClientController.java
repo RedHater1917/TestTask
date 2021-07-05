@@ -3,10 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.Client;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -17,7 +15,7 @@ public class ClientController {
     private ClientService service;
 
     @GetMapping("/{id}")
-    public Optional<Client> getAll(@PathVariable UUID id) {
+    public Client getAll(@PathVariable UUID id) {
         return service.get(id);
     }
     @GetMapping("/")

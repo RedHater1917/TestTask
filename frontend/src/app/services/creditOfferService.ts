@@ -5,6 +5,8 @@ import { HttpClient } from "@angular/common/http";
 import { CreditOffer } from "../entities/creditOffer";
 import { CreditOfferEditComponent } from "../components/edit/credit-offer-edit/credit-offer-edit.component";
 import { DeleteDialogComponent } from "../components/delete-dialog/delete-dialog.component";
+import { PaymentSchedule } from "../entities/paymentSchedule";
+import { PaymentScheduleSettings } from "../entities/paymentScheduleSettings";
 @Injectable({
     providedIn: "root",
   })
@@ -19,19 +21,25 @@ export class CreditOfferService{
         });
     }
     get(id: String): Observable<CreditOffer> {
-        return this.http.get<CreditOffer>(`api/creditOffer/${id}`);
+      return this.http.get<CreditOffer>(`api/creditOffer/${id}`);
     }
     getAll(): Observable<CreditOffer[]> {
-         return this.http.get<CreditOffer[]>(`api/creditOffer/`);
+      return this.http.get<CreditOffer[]>(`api/creditOffer/`);
+    }
+    calculatePaymentSchedule(settings:PaymentScheduleSettings):Observable<PaymentSchedule[]>{
+      return this.http.post<PaymentSchedule[]>(`api/creditOffer/calculatePaymentSchedule`,settings);
+    }
+    getPaymentScheduleByOffer(offerId:String):Observable<PaymentSchedule[]>{
+      return this.http.get<PaymentSchedule[]>(`api/creditOffer/paymentSchedule/${offerId}`);
     }
     save(entity: CreditOffer): Observable<CreditOffer> {
-         return this.http.post<CreditOffer>(`api/creditOffer/save`,entity);
+      return this.http.post<CreditOffer>(`api/creditOffer/save`,entity);
     }
     update(entity: CreditOffer): Observable<String> {
-         return this.http.post<String>(`api/creditOffer/update`,entity);
+      return this.http.post<String>(`api/creditOffer/update`,entity);
     }
     delete(entity: CreditOffer): Observable<Object> {
-         return this.http.post<Object>(`api/creditOffer/delete`,entity);
+      return this.http.post<Object>(`api/creditOffer/delete`,entity);
     }
     createEditDialog(entity?:CreditOffer){
         let data = entity ? entity:null;

@@ -11,7 +11,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
-import { CreditArrangementComponent } from './components/credit-arrangement/credit-arrangement.component';
 import { AdminComponent } from './components/admin/admin.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
@@ -26,14 +25,15 @@ import { CreditBrowseComponent } from './components/browse/credit-browse/credit-
 import { CreditOfferBrowseComponent } from './components/browse/credit-offer-browse/credit-offer-browse.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
-import {MatDividerModule} from '@angular/material/divider'
+import {MatDividerModule} from '@angular/material/divider';
+import {MatSelectModule} from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreditArrangementComponent,
     AdminComponent,
     ClientEditComponent,
     CreditEditComponent,
@@ -43,8 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
     ClientBrowseComponent,
     CreditBrowseComponent,
     CreditOfferBrowseComponent,
-    BankBrowseComponent,
-    CreditArrangementComponent
+    BankBrowseComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +64,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatMenuModule,
     MatIconModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule,
+    MatSlideToggleModule
   ],
   entryComponents: [
     ClientEditComponent,

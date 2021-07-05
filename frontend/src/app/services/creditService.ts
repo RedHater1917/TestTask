@@ -24,6 +24,9 @@ export class CreditService{
     getAll(): Observable<Credit[]> {
          return this.http.get<Credit[]>(`api/credit/`);
     }
+    getNewBankCredits(bankId: String): Observable<Credit[]> {
+      return this.http.get<Credit[]>(`api/credit/newBankCredits/${bankId}`);
+  }
     save(entity: Credit): Observable<Credit> {
          return this.http.post<Credit>(`api/credit/save`,entity);
     }

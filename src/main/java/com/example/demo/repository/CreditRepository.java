@@ -14,5 +14,5 @@ public interface CreditRepository extends CrudRepository<Credit, UUID> {
     @Query(nativeQuery = true,
             value = "SELECT * FROM PUBLIC.CREDIT c where c.ID NOT IN" +
                     "(SELECT b.CREDIT_LIST_ID FROM PUBLIC.BANK_CREDIT_LIST b where b.BANK_ID = :bankId)")
-    Iterable<Client> getNewBankClients(@Param("bankId") UUID bankId);
+    Iterable<Credit> getNewBankCredits(@Param("bankId") UUID bankId);
 }
