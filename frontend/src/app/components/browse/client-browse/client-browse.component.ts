@@ -17,7 +17,7 @@ export class ClientBrowseComponent implements OnInit,OnChanges {
   public dataSource;
   displayedColumns: Array<string>;
   constructor(public service:ClientService) {
-    this.displayedColumns = ["id","fio","email","passportNumber","actions"];
+    this.displayedColumns = ["id","fio","telephoneNumber","email","passportNumber","actions"];
    }
    ngOnChanges(changes: SimpleChanges) {
     if(!this.active){

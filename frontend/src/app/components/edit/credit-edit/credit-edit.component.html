@@ -1,18 +1,19 @@
 <form [formGroup]="creditForm" (ngSubmit)="onSubmit()" class="example-form" id="creditFormId">
   <mat-card-content>
-    <mat-form-field [formGroup]="creditForm">
+    <mat-form-field [formGroup]="creditForm" class="margin_5px">
       <input matInput required placeholder="Credit Liimt" formControlName="creditLimit" />
+       <span matSuffix>RUB</span>
     </mat-form-field>
-    <mat-form-field [formGroup]="creditForm">
+    <mat-form-field [formGroup]="creditForm" class="margin_5px">
       <input matInput required placeholder="Credit Percent" formControlName="creditPercent"/>
       <span matSuffix>%</span>
     </mat-form-field>
   </mat-card-content>
   <div> 
-    <button [disabled]="creditForm.invalid" mat-flat-button color="primary" class="btn-block" type="submit">
+    <button [disabled]="creditForm.invalid" mat-flat-button color="primary" class="margin_5px" type="submit">
       Ok
     </button>
-    <button mat-flat-button color="primary" class="btn-block" (click)="close()">
+    <button mat-flat-button color="primary" class="margin_5px" (click)="close()">
       Cancel
     </button>
   </div>

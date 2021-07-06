@@ -22,7 +22,7 @@
         <div mat-subheader>Bank credits</div>
         <mat-list-item *ngFor="let credit of data.creditList">
           <div mat-line> 
-            {{credits.creditLimit}}({{credits.creditPercent}}%)
+            {{credit.creditLimit}}({{credit.creditPercent}}%)
             <button mat-flat-button color="primary" class="right_button" (click)="removeCredit(credit)">
                 -
             </button>
@@ -32,7 +32,7 @@
         <div mat-subheader>All credits</div>
         <mat-list-item *ngFor="let credit of allCredits"> 
           <div mat-line>
-            {{credits.creditLimit}}({{credits.creditPercent}}%)
+            {{credit.creditLimit}}({{credit.creditPercent}}%)
             <button mat-flat-button color="primary" class="right_button" (click)="addCredit(credit)">
                 +
             </button>

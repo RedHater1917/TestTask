@@ -8,6 +8,8 @@ import com.example.demo.repository.PaymentScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -35,6 +37,7 @@ public class CreditOfferServiceImpl implements CreditOfferService {
         creditOffer.setPaymentSchedule(null);
         creditOffer = creditOfferRepository.save(creditOffer);
         for(PaymentSchedule schedule:scheduleList){
+            schedule.setOffer(creditOffer);
             schedule = paymentScheduleRepository.save(schedule);
         }
         creditOffer.setPaymentSchedule(scheduleList);
@@ -47,43 +50,41 @@ public class CreditOfferServiceImpl implements CreditOfferService {
         this.creditOfferRepository.delete(creditOffer);
     }
 
+    /**С этим методом есть одна проблема - точность ~97-99%
+     * Чем больше процентная ставка , тем ниже точность, я думаю, что в некоторых случаях и до 95% может дойти
+     * Даже с учетом использования BigDecimal(С Double было чуть похуже)
+     * С ануитетным счетом он накидывает эту разницу в тело кредита
+     * С дифференциальным он её накидывает в проценты кредита
+     * Проблема именно в расчёте переменной sum, но других формул, которые бы давали
+     * настолько же точный результат я не нашёл
+     * */
     @Override
     public List<PaymentSchedule> calculatePaymentSchedule(PaymentScheduleSettings settings) {
         var resultList = new ArrayList<PaymentSchedule>();
-        var percents = Double.valueOf(settings.getCredit().getCreditPercent()) / 100.0 / settings.getNumOfMonths();
-        var sum = 0.0;
-        if(settings.isAnnuity()){
-            sum = toTwoNumbersAfterPoint(settings.getCreditSum()/settings.getNumOfMonths());
+        BigDecimal percents = BigDecimal.valueOf(settings.getCredit().getCreditPercent()).divide(BigDecimal.valueOf(100*settings.getNumOfMonths()),6,RoundingMode.HALF_UP);
+        BigDecimal sum;
+        if(settings.isDifferential()){
+            sum = settings.getCreditSum().divide(BigDecimal.valueOf(settings.getNumOfMonths()),6, RoundingMode.HALF_UP);
         }else{
-            sum = toTwoNumbersAfterPoint((settings.getCreditSum()*
-                    (percents+(percents/(Math.pow((1+percents),settings.getNumOfMonths())-1)))));
-
+            sum = (settings.getCreditSum().multiply(
+                    (percents.add(percents.divide(percents.add(BigDecimal.valueOf(1))
+                            .pow(settings.getNumOfMonths()).subtract(BigDecimal.valueOf(1)),6, RoundingMode.HALF_UP)))));
         }
         for(int i = 0;i<settings.getNumOfMonths();i++){
             var schedule = new PaymentSchedule();
             schedule.setPaymentDate(LocalDate.now().plusMonths(i));
-            schedule.setCreditPercentSum(toTwoNumbersAfterPoint(settings.getCreditSum()*percents));
-            if(settings.isAnnuity()){
-                schedule.setCreditBodySum(sum);
-                schedule.setPaymentSum(toTwoNumbersAfterPoint(schedule.getCreditBodySum()+schedule.getCreditPercentSum()));
+            schedule.setCreditPercentSum(settings.getCreditSum().multiply(percents).setScale(2,RoundingMode.HALF_UP));
+            if(settings.isDifferential()){
+                schedule.setCreditBodySum(sum.setScale(2,RoundingMode.HALF_UP));
+                schedule.setPaymentSum(schedule.getCreditBodySum().add(schedule.getCreditPercentSum()).setScale(2,RoundingMode.HALF_UP));
             }else{
-                schedule.setCreditBodySum(toTwoNumbersAfterPoint(sum-schedule.getCreditPercentSum()));
-                schedule.setPaymentSum(toTwoNumbersAfterPoint(sum));
-              }
-            settings.setCreditSum(settings.getCreditSum()-sum);
+                schedule.setPaymentSum(sum.setScale(2,RoundingMode.HALF_UP));
+                schedule.setCreditBodySum(sum.subtract(schedule.getCreditPercentSum()).setScale(2,RoundingMode.HALF_UP));
+            }
+            settings.setCreditSum((settings.getCreditSum().subtract(sum).compareTo(BigDecimal.ZERO)) > 0 ? settings.getCreditSum().subtract(sum):BigDecimal.ZERO);//Иногда, при кол-ве месяцев>8-10 получается так, что проценты кредита уходят в минус
             resultList.add(schedule);
         }
         return resultList;
-    }
-
-    @Override
-    public List<PaymentSchedule> getPaymentScheduleByOffer(UUID offerId) {
-        return paymentScheduleRepository.getPaymentScheduleByOffer(offerId);
-    }
-
-    private Double toTwoNumbersAfterPoint(Double number){
-        var format = new DecimalFormat("##.00");
-        return Double.parseDouble(format.format(number).replace(",","."));
     }
 
 }

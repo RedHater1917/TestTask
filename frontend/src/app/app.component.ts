@@ -7,12 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Bank app';
   constructor(private router: Router) {}
 
-  arrangement() {
-    this.router.navigate(["/arrangement"]);
-  }
   admin() {
     this.router.navigate(["/"]);
   }

@@ -19,10 +19,12 @@ export class ClientEditComponent{
       this.clientForm = this.fb.group({
         fio: [""],
         email: ["",Validators.email],
-        passportNumber:[""]
+        telephone: ["",Validators.pattern(/^\+7\-\([0-9]{3}\)\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/)],
+        passportNumber:["",Validators.pattern(/^[0-9]{2}\s[0-9]{2}\s[0-9]{6}$/)]
       });
       if(this.data!=null){
-        this.clientForm.setValue({fio:data.fio, email: data.email, passportNumber:data.passportNumber})
+        this.clientForm.setValue({fio:data.fio, telephone: data.telephoneNumber,
+                                   email: data.email, passportNumber:data.passportNumber});
       }
     }
   onSubmit() {
@@ -30,6 +32,7 @@ export class ClientEditComponent{
       this.data = new Client();
     }
     this.data.fio = this.clientForm.value.fio;
+    this.data.telephoneNumber = this.clientForm.value.telephone;
     this.data.email = this.clientForm.value.email;
     this.data.passportNumber = this.clientForm.value.passportNumber;
     this.service.save(this.data).subscribe((s) => {

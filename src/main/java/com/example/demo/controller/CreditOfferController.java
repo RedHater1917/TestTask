@@ -36,9 +36,4 @@ public class CreditOfferController {
     public List<PaymentSchedule> calculatePaymentSchedule(@RequestBody PaymentScheduleSettings settings) {
         return service.calculatePaymentSchedule(settings);
     }
-    @GetMapping("/paymentSchedule/{offerId}")
-    public List<PaymentSchedule> getPaymentScheduleByOffer(@PathVariable UUID offerId) {
-        return service.getPaymentScheduleByOffer(offerId);
-    }
-
 }

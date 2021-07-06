@@ -43,7 +43,6 @@ export class BankEditComponent{
   }
   addCredit(credit){
     this.data.creditList.push(credit);
-    console.log(credit);
     this.allCredits.splice(this.allCredits.indexOf(credit),1);
   }
   removeClient(client){
@@ -52,7 +51,6 @@ export class BankEditComponent{
   }
   removeCredit(credit){
     this.allCredits.push(credit);
-    console.log(credit);
     this.data.creditList.splice(this.data.creditList.indexOf(credit),1);
   }
   save(){

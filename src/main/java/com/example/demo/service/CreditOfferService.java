@@ -14,5 +14,4 @@ public interface CreditOfferService {
     CreditOffer save(CreditOffer creditOffer);
     void delete(CreditOffer creditOffer);
     List<PaymentSchedule> calculatePaymentSchedule(PaymentScheduleSettings settings);
-    List<PaymentSchedule> getPaymentScheduleByOffer(UUID offerId);
 }

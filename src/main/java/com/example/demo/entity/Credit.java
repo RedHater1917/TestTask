@@ -14,7 +14,7 @@ public class Credit {
     @Id
     @GeneratedValue
     private UUID id;
-    private Integer creditLimit;
-    private Short creditPercent;
+    private Long creditLimit;
+    private Float creditPercent;
 
 }

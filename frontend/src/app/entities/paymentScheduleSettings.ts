@@ -6,12 +6,12 @@ export class PaymentScheduleSettings{
     credit:Credit;
     creditSum:number;
     numOfMonths:number;
-    annuity:boolean;
-    public constructor(offer:CreditOffer,credit:Credit,creditSum:number,numOfMonths:number,annuity:boolean){
+    differential:boolean;
+    public constructor(offer:CreditOffer,credit:Credit,creditSum:number,numOfMonths:number,diff:boolean){
         this.creditOffer = offer;
         this.credit = credit;
         this.creditSum = creditSum;
         this.numOfMonths = numOfMonths;
-        this.annuity = annuity;
+        this.differential = diff;
     }
 }

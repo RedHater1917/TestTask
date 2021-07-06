@@ -11,7 +11,4 @@ import java.util.UUID;
 
 @Repository
 public interface PaymentScheduleRepository extends CrudRepository<PaymentSchedule, UUID> {
-
-    @Query("SELECT * FROM PaymentSchedule p where p.offer.id = :offerId")
-    List<PaymentSchedule> getPaymentScheduleByOffer(@Param("offerId") UUID offerId);
 }

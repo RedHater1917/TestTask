@@ -5,6 +5,8 @@ import { HttpClient } from "@angular/common/http";
 import { Bank } from "../entities/bank";
 import { BankEditComponent } from "../components/edit/bank-edit/bank-edit.component";
 import { DeleteDialogComponent } from "../components/delete-dialog/delete-dialog.component";
+import { Credit } from "../entities/credit";
+import { Client } from "../entities/client";
 @Injectable({
     providedIn: "root",
   })
@@ -23,6 +25,12 @@ export class BankService{
     }
     getAll(): Observable<Bank[]> {
          return this.http.get<Bank[]>(`api/bank/`);
+    }
+    getBankClientsList(bankId: String): Observable<Client[]> {
+        return this.http.get<Client[]>(`api/bank/clients/${bankId}`);
+    }
+    getBankCreditsList(bankId: String): Observable<Credit[]> {
+        return this.http.get<Credit[]>(`api/bank/credits/${bankId}`);
     }
     save(entity: Bank): Observable<Bank> {
          return this.http.post<Bank>(`api/bank/save`,entity);

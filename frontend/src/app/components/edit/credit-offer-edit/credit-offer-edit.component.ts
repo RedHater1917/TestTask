@@ -22,7 +22,7 @@ export class CreditOfferEditComponent{
   credits:Credit[];
   creditForm: FormGroup;
   type = "Annuity";
-  public dataSource;
+  public dataSource:MatTableDataSource<PaymentSchedule> = new MatTableDataSource();;
   displayedColumns: Array<string>;
   constructor(public fb: FormBuilder, private service:CreditOfferService, private creditService:CreditService,
     private clientService:ClientService,public dialogRef: MatDialogRef<CreditOfferEditComponent>,
@@ -32,16 +32,14 @@ export class CreditOfferEditComponent{
         creditSum:["",Validators.required],
         credit:["",Validators.required],
         client:["",Validators.required],
-        annuity:[false,Validators.required],
+        diff:[false,Validators.required],
       });
       if(this.data==null){
         this.data = new CreditOffer();
       }else{
-        this.creditForm.setValue({creditSum: data.creditSum, client: data.client,
-                                   credit: data.credit});
-        this.service.getPaymentScheduleByOffer(this.data.id).subscribe(schedule=>{
-          this.initScheduleData(schedule);
-        });
+        this.creditForm.setValue({creditSum: data.creditSum, client: data.client.id,
+                                   credit: data.credit.id, diff: false, monthNum:0});
+        this.scheduleData(this.data.paymentSchedule);
       }
       this.clientService.getAll().subscribe(all=>{
         this.clients = all;
@@ -56,24 +54,43 @@ export class CreditOfferEditComponent{
   calculatePaymentSchedule(){
     let settings = new PaymentScheduleSettings(this.data,this.creditForm.value.credit,
                                                 this.creditForm.value.creditSum,this.creditForm.value.monthNum,
-                                                this.creditForm.value.annuity);
+                                                this.creditForm.value.diff);
     this.service.calculatePaymentSchedule(settings).subscribe(schedule=>{
-     this.initScheduleData(schedule);
+     this.scheduleData(schedule);
     })
   }  
 
-  initScheduleData(schedule:PaymentSchedule[]){
+  scheduleData(schedule:PaymentSchedule[]){
     this.data.paymentSchedule = schedule;
-    this.dataSource = new MatTableDataSource(schedule);
+    this.dataSource.data = schedule;
   }
+
   onSubmit() {
-    this.data.client = this.creditForm.value.client;
-    this.data.credit = this.creditForm.value.credit;
+    this.data.client = this.clients.find(client=>client.id == this.creditForm.value.client);
+    this.data.credit = this.credits.find(credit=>credit.id == this.creditForm.value.credit);
     this.data.creditSum = this.creditForm.value.creditSum;
     this.service.save(this.data).subscribe((s) => {
       this.dialogRef.close();
       this.service.loadData();
     });
+  }
+
+  getTotalPayment(){
+    let reducer = (accumulator, currentValue:number) => accumulator + currentValue;
+    let arr = this.data.paymentSchedule.map(value=>{return value.paymentSum})
+    return arr.reduce(reducer);
+  }
+
+  getTotalBodySum(){
+    let reducer = (accumulator:number, currentValue:number) => accumulator + currentValue;
+    let arr = this.data.paymentSchedule.map(value=>{return value.creditBodySum})
+    return arr.reduce(reducer);
+  }
+
+  getTotalPercentSum(){
+    let reducer = (accumulator, currentValue:number) => accumulator + currentValue;
+    let arr = this.data.paymentSchedule.map(value=>{return value.creditPercentSum})
+    return arr.reduce(reducer);
   }
 
   changeName(event:MatSlideToggleChange){
@@ -87,4 +104,5 @@ export class CreditOfferEditComponent{
   close(){
     this.dialogRef.close();
   }
+
 }

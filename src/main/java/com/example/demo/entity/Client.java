@@ -3,10 +3,7 @@ package com.example.demo.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +15,10 @@ public class Client {
     @GeneratedValue
     private UUID id;
     private String fio;
+    @Column(unique = true)
+    private String telephoneNumber;
+    @Column(unique = true)
     private String email;
-    private Integer passportNumber;
+    @Column(unique = true)
+    private String passportNumber;
 }
