@@ -52,7 +52,7 @@ export class CreditOfferEditComponent{
     }
   
   calculatePaymentSchedule(){
-    let settings = new PaymentScheduleSettings(this.data,this.creditForm.value.credit,
+    let settings = new PaymentScheduleSettings(this.data,this.credits.find(credit=>credit.id == this.creditForm.value.credit),
                                                 this.creditForm.value.creditSum,this.creditForm.value.monthNum,
                                                 this.creditForm.value.diff);
     this.service.calculatePaymentSchedule(settings).subscribe(schedule=>{
