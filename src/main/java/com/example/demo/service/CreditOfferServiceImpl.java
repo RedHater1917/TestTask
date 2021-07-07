@@ -50,29 +50,20 @@ public class CreditOfferServiceImpl implements CreditOfferService {
         this.creditOfferRepository.delete(creditOffer);
     }
 
-    /**С этим методом есть одна проблема - точность ~97-99%
-     * Чем больше процентная ставка , тем ниже точность, я думаю, что в некоторых случаях и до 95% может дойти
-     * Даже с учетом использования BigDecimal(С Double было чуть похуже)
-     * С ануитетным счетом он накидывает эту разницу в тело кредита
-     * С дифференциальным он её накидывает в проценты кредита
-     * Проблема именно в расчёте переменной sum, но других формул, которые бы давали
-     * настолько же точный результат я не нашёл
-     * */
     @Override
     public List<PaymentSchedule> calculatePaymentSchedule(PaymentScheduleSettings settings) {
         var resultList = new ArrayList<PaymentSchedule>();
-        BigDecimal percents = BigDecimal.valueOf(settings.getCredit().getCreditPercent()).divide(BigDecimal.valueOf(100*settings.getNumOfMonths()),6,RoundingMode.HALF_UP);
+        BigDecimal percents = BigDecimal.valueOf(settings.getCredit().getCreditPercent()).divide(BigDecimal.valueOf(100*12),6,RoundingMode.HALF_UP);
         BigDecimal sum;
-        if(settings.isDifferential()){
+        if(settings.isDifferential()){//В этом блоке считаются постоянные величины: тело кредита при диффиренцированнм или месячный платеж при аннуитете
             sum = settings.getCreditSum().divide(BigDecimal.valueOf(settings.getNumOfMonths()),6, RoundingMode.HALF_UP);
         }else{
-            sum = (settings.getCreditSum().multiply(
-                    (percents.add(percents.divide(percents.add(BigDecimal.valueOf(1))
-                            .pow(settings.getNumOfMonths()).subtract(BigDecimal.valueOf(1)),6, RoundingMode.HALF_UP)))));
+            sum = settings.getCreditSum().multiply((percents.add(
+                    percents.divide(percents.add(BigDecimal.ONE).pow(settings.getNumOfMonths()).subtract(BigDecimal.ONE),6, RoundingMode.HALF_UP))));
         }
         for(int i = 0;i<settings.getNumOfMonths();i++){
             var schedule = new PaymentSchedule();
-            schedule.setPaymentDate(LocalDate.now().plusMonths(i));
+            schedule.setPaymentDate(LocalDate.now().plusDays(30*i));
             schedule.setCreditPercentSum(settings.getCreditSum().multiply(percents).setScale(2,RoundingMode.HALF_UP));
             if(settings.isDifferential()){
                 schedule.setCreditBodySum(sum.setScale(2,RoundingMode.HALF_UP));
