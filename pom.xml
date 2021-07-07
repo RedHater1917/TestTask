@@ -56,11 +56,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.javamoney.lib</groupId>
-			<artifactId>javamoney-calc</artifactId>
-			<version>1.1</version>
-		</dependency>
 	</dependencies>
 
 	<build>

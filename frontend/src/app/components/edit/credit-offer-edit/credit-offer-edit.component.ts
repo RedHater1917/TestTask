@@ -78,19 +78,19 @@ export class CreditOfferEditComponent{
   getTotalPayment(){
     let reducer = (accumulator, currentValue:number) => accumulator + currentValue;
     let arr = this.data.paymentSchedule.map(value=>{return value.paymentSum})
-    return arr.reduce(reducer);
+    return arr.reduce(reducer).toFixed(2);
   }
 
   getTotalBodySum(){
     let reducer = (accumulator:number, currentValue:number) => accumulator + currentValue;
     let arr = this.data.paymentSchedule.map(value=>{return value.creditBodySum})
-    return arr.reduce(reducer);
+    return arr.reduce(reducer).toFixed(2);
   }
 
   getTotalPercentSum(){
     let reducer = (accumulator, currentValue:number) => accumulator + currentValue;
     let arr = this.data.paymentSchedule.map(value=>{return value.creditPercentSum})
-    return arr.reduce(reducer);
+    return arr.reduce(reducer).toFixed(2);
   }
 
   changeName(event:MatSlideToggleChange){
