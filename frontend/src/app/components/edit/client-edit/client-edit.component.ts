@@ -19,7 +19,7 @@ export class ClientEditComponent{
       this.clientForm = this.fb.group({
         fio: [""],
         email: ["",Validators.email],
-        telephone: ["",Validators.pattern(/^\+7\-\([0-9]{3}\)\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/)],
+        telephone: ["",Validators.pattern(/^\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/)],
         passportNumber:["",Validators.pattern(/^[0-9]{2}\s[0-9]{2}\s[0-9]{6}$/)]
       });
       if(this.data!=null){

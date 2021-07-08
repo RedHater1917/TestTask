@@ -62,7 +62,15 @@ export class CreditOfferEditComponent{
 
   scheduleData(schedule:PaymentSchedule[]){
     this.data.paymentSchedule = schedule;
-    this.dataSource.data = schedule;
+    this.dataSource.data = schedule.sort(function (a:PaymentSchedule,b:PaymentSchedule){
+        if (a.paymentDate > b.paymentDate) {
+          return 1;
+        }
+        if (a.paymentDate < b.paymentDate) {
+          return -1;
+        }
+        return 0;
+    });
   }
 
   onSubmit() {

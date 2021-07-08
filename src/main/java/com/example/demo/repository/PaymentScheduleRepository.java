@@ -6,9 +6,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface PaymentScheduleRepository extends CrudRepository<PaymentSchedule, UUID> {
+    @Query("SELECT p FROM PaymentSchedule p where p.offer.id = :offerId")
+    Iterable<PaymentSchedule> getByOffer(@Param("offerId") UUID offerId);
 }

@@ -1,6 +1,8 @@
 <div class="card">
-    <mat-list class="column">
-        <div mat-subheader>Bank clients</div>
+    <div class="column">
+      <div mat-subheader>Bank clients</div>
+      <mat-divider></mat-divider>
+      <mat-list class="list">
         <mat-list-item *ngFor="let client of data.clientList">
           <div mat-line>{{client.fio}}
             <button mat-flat-button color="primary" class="right_button" (click)="removeClient(client)">
@@ -8,8 +10,11 @@
             </button>
           </div>
         </mat-list-item>
-        <mat-divider></mat-divider>
-        <div mat-subheader>All clients</div>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <div mat-subheader>All clients</div>
+      <mat-divider></mat-divider>
+      <mat-list class="list">
         <mat-list-item *ngFor="let client of allClients">
           <div mat-line>{{client.fio}}
             <button mat-flat-button color="primary" class="right_button" (click)="addClient(client)">
@@ -18,8 +23,12 @@
           </div>
         </mat-list-item>
       </mat-list>
-      <mat-list class="column">
-        <div mat-subheader>Bank credits</div>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="column">
+      <div mat-subheader>Bank credits</div>
+      <mat-divider></mat-divider>
+      <mat-list class="list">
         <mat-list-item *ngFor="let credit of data.creditList">
           <div mat-line> 
             {{credit.creditLimit}}({{credit.creditPercent}}%)
@@ -28,8 +37,11 @@
             </button>
           </div>
         </mat-list-item>
-        <mat-divider></mat-divider>
-        <div mat-subheader>All credits</div>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <div mat-subheader>All credits</div>
+      <mat-divider></mat-divider>
+      <mat-list class="list">
         <mat-list-item *ngFor="let credit of allCredits"> 
           <div mat-line>
             {{credit.creditLimit}}({{credit.creditPercent}}%)
@@ -39,6 +51,8 @@
           </div>
         </mat-list-item>
       </mat-list>
+      <mat-divider></mat-divider>
+    </div>
 </div>
 <div>
   <button mat-flat-button color="primary" (click)="save()">

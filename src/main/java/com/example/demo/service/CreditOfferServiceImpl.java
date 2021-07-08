@@ -34,6 +34,11 @@ public class CreditOfferServiceImpl implements CreditOfferService {
     @Override
     public CreditOffer save(CreditOffer creditOffer) {
         var scheduleList = creditOffer.getPaymentSchedule();
+        paymentScheduleRepository.getByOffer(creditOffer.getId()).forEach(payment->{
+            if(payment.getId()!=null) {
+                paymentScheduleRepository.delete(payment);
+            }
+        });
         creditOffer.setPaymentSchedule(null);
         creditOffer = creditOfferRepository.save(creditOffer);
         for(PaymentSchedule schedule:scheduleList){
@@ -50,15 +55,11 @@ public class CreditOfferServiceImpl implements CreditOfferService {
         this.creditOfferRepository.delete(creditOffer);
     }
 
-    /**Если сравнивать с калькулятором на https://fincult.info/calc/loan/#amount, то точность ~99%
-     * К сожалению, большей точности добиться мне не удалось
-     * Но она теперь не уменьшается от увеличения месяцев
-     */
     @Override
     public List<PaymentSchedule> calculatePaymentSchedule(PaymentScheduleSettings settings) {
         var credit = settings.getCreditSum();
         var resultList = new ArrayList<PaymentSchedule>();
-        BigDecimal percents = BigDecimal.valueOf(settings.getCredit().getCreditPercent()).divide(BigDecimal.valueOf(100*12),6,RoundingMode.HALF_UP);
+        BigDecimal percents = BigDecimal.valueOf(settings.getCredit().getCreditPercent()).divide(BigDecimal.valueOf(1200),6,RoundingMode.HALF_UP);//1200 = 12(месяцы)*100(проценты)
         BigDecimal sum;
         if(settings.isDifferential()){//В этом блоке считаются постоянные величины: тело кредита при диффиренцированном или месячный платеж при аннуитете
             sum = settings.getCreditSum().divide(BigDecimal.valueOf(settings.getNumOfMonths()),4, RoundingMode.HALF_UP);
@@ -68,28 +69,19 @@ public class CreditOfferServiceImpl implements CreditOfferService {
         }
         for(int i = 0;i<settings.getNumOfMonths();i++){
             var schedule = new PaymentSchedule();
-            schedule.setPaymentDate(LocalDate.now().plusMonths(i));
+            schedule.setPaymentDate(LocalDate.now().plusDays(i*30));
             schedule.setCreditPercentSum(credit.multiply(percents).setScale(2,RoundingMode.HALF_UP));
             if(settings.isDifferential()){
                 schedule.setCreditBodySum(sum.setScale(2,RoundingMode.HALF_UP));
                 schedule.setPaymentSum(sum.add(schedule.getCreditPercentSum()).setScale(2,RoundingMode.HALF_UP));
-                credit = (credit.subtract(schedule.getPaymentSum()).compareTo(BigDecimal.ZERO)) > 0 ? credit.subtract(schedule.getPaymentSum()):BigDecimal.ZERO;//Иногда, при кол-ве месяцев>8-10 получается так, что проценты кредита уходят в минус
+                credit = (credit.subtract(schedule.getCreditBodySum()).compareTo(BigDecimal.ZERO)) > 0 ? credit.subtract(schedule.getCreditBodySum()):BigDecimal.ZERO;
             }else{
                 schedule.setPaymentSum(sum.setScale(2,RoundingMode.HALF_UP));
                 schedule.setCreditBodySum(sum.subtract(schedule.getCreditPercentSum()).setScale(2,RoundingMode.HALF_UP));
-                credit = (credit.subtract(sum).compareTo(BigDecimal.ZERO)) > 0 ? credit.subtract(sum):BigDecimal.ZERO;//Иногда, при кол-ве месяцев>8-10 получается так, что проценты кредита уходят в минус
+                credit = (credit.subtract(schedule.getCreditBodySum()).compareTo(BigDecimal.ZERO)) > 0 ? credit.subtract(schedule.getCreditBodySum()):BigDecimal.ZERO;
             }
             resultList.add(schedule);
         }
-        if(!settings.isDifferential()){//Пересчёт кредита. Костыль, но пока ничего лучше нет
-            var fullCredBodyForCorrect = resultList.stream().mapToDouble(payment->payment.getCreditBodySum().doubleValue()).sum();
-            BigDecimal correctingSubtract = BigDecimal.valueOf(fullCredBodyForCorrect).subtract(settings.getCreditSum()).divide(BigDecimal.valueOf(resultList.size()),2,RoundingMode.HALF_UP);
-            resultList.forEach(payment->{
-                payment.setCreditBodySum(payment.getCreditBodySum().subtract(correctingSubtract));
-                payment.setCreditPercentSum(payment.getPaymentSum().subtract(payment.getCreditBodySum()));
-            });
-        }
         return resultList;
     }
-
 }
